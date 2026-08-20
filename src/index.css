@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-secondary: #14B8A6;
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-heading: #0F172A;
+  --color-text: #475569;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-soft-primary: #EFF6FF;
+  --color-soft-secondary: #F0FDFA;
+}
+
+@theme {
+  /* Dynamic Theme Variables */
+  --color-primary-bg: var(--color-background);
+  --color-secondary-bg: var(--color-surface);
+  --color-primary-accent: var(--color-primary);
+  --color-secondary-accent: var(--color-secondary);
+  --color-text-main: var(--color-heading);
+  --color-text-secondary: var(--color-text);
+  --color-light-bg: var(--color-soft-primary);
+  --color-dark-text: var(--color-heading);
+  
+  /* Fallbacks mapping to old classes to ensure seamless transition */
+  --color-slate-950: var(--color-background);
+  --color-slate-900: var(--color-soft-secondary);
+  --color-slate-800: var(--color-border); 
+  --color-slate-400: var(--color-text);
+  --color-slate-300: var(--color-text);
+  --color-slate-200: var(--color-border);
+  --color-slate-50: var(--color-surface);
+  --color-cyan-400: var(--color-secondary);
+  --color-cyan-500: var(--color-primary);
+  --color-blue-500: var(--color-primary);
+  
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  
+  --radius-3xl: 1rem;
+  --radius-2xl: 0.75rem;
+  --radius-xl: 0.5rem;
+  --radius-lg: 0.25rem;
+}
+
+@layer base {
+  body {
+    @apply bg-primary-bg text-text-secondary font-sans antialiased selection:bg-primary-accent/25 selection:text-dark-text;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold text-dark-text;
+    transition: color 0.3s ease;
+  }
+}
+
+/* Custom noise overlay pattern - extremely subtle for light theme */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.15;
+  mix-blend-mode: multiply;
+}
+
+.bg-grid {
+  background-image: linear-gradient(to right, color-mix(in srgb, var(--color-primary) 5%, transparent) 1px, transparent 1px),
+                    linear-gradient(to bottom, color-mix(in srgb, var(--color-primary) 5%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Subtle glow effect for premium cards */
+.glow-effect {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+.glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 60%);
+  border-radius: inherit;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+.glow-effect:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+.glow-effect:hover::before {
+  opacity: 1;
+}
